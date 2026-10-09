@@ -1,15 +1,16 @@
 const router = require('express').Router();
 const controller = require('../controllers/category.controller');
 const validate = require('../middleware/validate');
+const { requireAdmin } = require('../middleware/auth');
 const v = require('../validators/category.validator');
 
 // Public
 router.get('/', controller.list);
 router.get('/:slug', controller.getBySlug);
 
-// Admin only (login protection gets added in a later step)
-router.post('/', validate(v.create), controller.create);
-router.put('/:id', validate(v.update), controller.update);
-router.delete('/:id', validate(v.byId), controller.remove);
+// Admin only
+router.post('/', requireAdmin, validate(v.create), controller.create);
+router.put('/:id', requireAdmin, validate(v.update), controller.update);
+router.delete('/:id', requireAdmin, validate(v.byId), controller.remove);
 
 module.exports = router;
