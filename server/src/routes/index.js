@@ -5,5 +5,6 @@ router.get('/health', (req, res) => {
 });
 
 router.use('/categories', require('./category.routes'));
+router.use('/products', require('./product.routes'));
 
 module.exports = router;
